@@ -1703,6 +1703,38 @@ img {
   gap: 7px;
 }
 
+.drawer-recipient-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #065f46;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  margin-bottom: 2px;
+}
+
+.drawer-recipient-hint b {
+  color: #047857;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.wa-dot {
+  color: #10b981;
+  font-size: 0.75rem;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.btn-sm {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+}
+
 /* ==========================================================================
    Modals (Frosted Glass Windows)
    ========================================================================== */

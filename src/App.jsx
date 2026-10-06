@@ -297,27 +297,53 @@ export default function App() {
     setBusy(true);
     try {
       const text = buildOrderText(items, customer, total);
-      const { blob, fileName } = await generateOrderPdf(items, customer, total);
-      const file = new File([blob], fileName, { type: 'application/pdf' });
 
-      // Mobile native share (allows sending PDF directly to WhatsApp contact)
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], text, title: CONFIG.businessName });
-        setBusy(false);
-        return;
+      // Auto-generate and download official PDF quotation
+      try {
+        const { blob, fileName } = await generateOrderPdf(items, customer, total);
+        saveBlob(blob, fileName);
+      } catch (pdfErr) {
+        console.warn('PDF download warning:', pdfErr);
       }
 
-      // Desktop & general browser fallback: download PDF & open wa.me
-      saveBlob(blob, fileName);
+      // Direct WhatsApp link targeted explicitly to South Lanka Fireworks: 077 713 5516 (94777135516)
       const waUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
-      window.open(waUrl, '_blank');
-      showToast('PDF downloaded! Attach it in the opened WhatsApp chat.');
+      const opened = window.open(waUrl, '_blank');
+      if (!opened) {
+        window.location.href = waUrl;
+      }
+      showToast('✓ Opening WhatsApp with 077 713 5516... Quotation downloaded!');
+    } catch (e) {
+      console.error(e);
+      showToast('Opening WhatsApp chat directly...');
+      const text = buildOrderText(items, customer, total);
+      window.location.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const shareQuotation = async () => {
+    if (!validate()) return;
+    setBusy(true);
+    try {
+      const text = buildOrderText(items, customer, total);
+      const { blob, fileName } = await generateOrderPdf(items, customer, total);
+      const file = new File([blob], fileName, { type: 'application/pdf' });
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], text, title: `${CONFIG.businessName} Quotation` });
+        showToast('✓ Quotation shared successfully!');
+      } else if (navigator.share) {
+        await navigator.share({ text, title: `${CONFIG.businessName} Quotation` });
+      } else {
+        saveBlob(blob, fileName);
+        showToast('✓ PDF Quotation downloaded!');
+      }
     } catch (e) {
       if (e.name !== 'AbortError') {
         console.error(e);
-        showToast('Opening WhatsApp chat directly...');
-        const text = buildOrderText(items, customer, total);
-        window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`, '_blank');
+        showToast('Sharing not available. Downloading PDF instead.');
+        downloadPdf();
       }
     } finally {
       setBusy(false);
@@ -840,6 +866,11 @@ export default function App() {
             </div>
 
             <div className="drawer-actions">
+              <div className="drawer-recipient-hint">
+                <span className="wa-dot">●</span>
+                <span>Direct WhatsApp Order to: <b>077 713 5516</b></span>
+              </div>
+
               <button
                 id="send-whatsapp"
                 type="button"
@@ -847,7 +878,7 @@ export default function App() {
                 disabled={busy}
                 onClick={sendWhatsApp}
               >
-                {busy ? 'Preparing Order…' : '💬 Send Order via WhatsApp'}
+                {busy ? 'Preparing Order…' : '💬 Send Order to WhatsApp (077 713 5516)'}
               </button>
 
               <button
@@ -859,6 +890,19 @@ export default function App() {
               >
                 📄 Download PDF Quotation
               </button>
+
+              {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
+                <button
+                  id="share-quotation"
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  disabled={busy}
+                  onClick={shareQuotation}
+                  title="Share quotation with family or coordinator"
+                >
+                  📤 Share Quotation / PDF with Others
+                </button>
+              )}
 
               <button
                 type="button"
