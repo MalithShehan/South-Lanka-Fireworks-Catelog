@@ -2,11 +2,12 @@
 export const CONFIG = {
   businessName: 'South Lanka Fireworks',
   tagline: 'Light up every celebration',
-  // WhatsApp number in international format, digits only (Sri Lanka: 94 + number without leading 0)
-  whatsappNumber: '94771234567',
+  // WhatsApp number in international format (94 + 77 713 5516 without leading 0)
+  whatsappNumber: '94777135516',
   currency: 'LKR',
-  phone: '+94 77 123 4567',
-  address: 'Southern Province, Sri Lanka',
+  phone: '077 713 5516 / 091 224 6572',
+  mobilePhone: '+94 77 713 5516',
+  address: 'Galle, Southern Province, Sri Lanka',
   // Hero background video (file in /public/assets). Set '' to show only the poster image.
   heroVideo: '/assets/fireworks-video.mp4',
   safetyNote:

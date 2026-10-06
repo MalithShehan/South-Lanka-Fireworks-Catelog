@@ -341,7 +341,9 @@ export default function App() {
             </span>
           </div>
           <div className="top-ribbon-right">
-            <span>📞 Direct Hotline: {CONFIG.phone}</span>
+            <a href="tel:0777135516" className="ribbon-link">
+              📞 {CONFIG.mobilePhone}
+            </a>
             <a
               href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hello%20South%20Lanka%20Fireworks,%20I%20have%20an%20inquiry.`}
               target="_blank"
