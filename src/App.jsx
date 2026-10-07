@@ -94,14 +94,22 @@ function ProductCard({ p, cart, setQty, onVideo, onView }) {
               onVideo(p);
             }}
           >
-            ▶ Watch Effect
+            <span className="play-pulse-dot" />
+            <span>▶ Watch Effect</span>
           </button>
         )}
       </div>
 
       <div className="card-body">
-        <span className="cat-label">{p.category}</span>
-        <h3>{p.name}</h3>
+        <div className="card-category-row">
+          <span className="cat-label">{p.category}</span>
+          {p.sizes.length > 1 && (
+            <span className="size-count-pill">{p.sizes.length} sizes</span>
+          )}
+        </div>
+        <h3 className="card-title-clickable" onClick={() => onView(p)}>
+          {p.name}
+        </h3>
         <p className="desc">{p.description}</p>
 
         <SizePicker sizes={p.sizes} value={size} onChange={setSize} />
@@ -401,6 +409,13 @@ export default function App() {
             </div>
           </a>
 
+          <nav className="nav-links">
+            <a href="#catalog" className="nav-link">Catalog</a>
+            <a href="#trust" className="nav-link">Why Choose Us</a>
+            <a href="#shows" className="nav-link">Recent Displays</a>
+            <a href="#contact" className="nav-link">Factory & Contact</a>
+          </nav>
+
           <div className="nav-actions">
             <a
               href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hello,%20I%20want%20to%20inquire%20about%20fireworks.`}
@@ -466,7 +481,15 @@ export default function App() {
 
             <div className="hero-actions">
               <a href="#catalog" className="btn btn-primary btn-lg">
-                Explore Catalog ↓
+                🔥 Explore Catalog ↓
+              </a>
+              <a
+                href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hello%20South%20Lanka%20Fireworks,%20I%20would%20like%20to%20inquire%20about%20a%20fireworks%20order.`}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-wa-outline btn-lg"
+              >
+                💬 WhatsApp (077 713 5516)
               </a>
               {count > 0 && (
                 <button
@@ -474,9 +497,28 @@ export default function App() {
                   className="btn btn-ghost btn-lg"
                   onClick={() => setCartOpen(true)}
                 >
-                  View Order ({count})
+                  🛒 View Order ({count})
                 </button>
               )}
+            </div>
+
+            <div className="hero-stats">
+              <div className="stat-capsule">
+                <strong>25+</strong>
+                <span>Years Legacy</span>
+              </div>
+              <div className="stat-capsule">
+                <strong>500+</strong>
+                <span>Grand Displays</span>
+              </div>
+              <div className="stat-capsule">
+                <strong>100%</strong>
+                <span>Safety Tested</span>
+              </div>
+              <div className="stat-capsule">
+                <strong>Factory</strong>
+                <span>Direct Pricing</span>
+              </div>
             </div>
           </div>
 
@@ -622,7 +664,7 @@ export default function App() {
         )}
 
         {/* Why Choose Us Trust Section */}
-        <section className="trust-section">
+        <section className="trust-section" id="trust">
           <div className="trust-header">
             <h2>Why Choose <span className="grad-text">South Lanka Fireworks</span></h2>
             <p>Bringing professional, vibrant, and safe pyrotechnic experiences to every Sri Lankan celebration.</p>
@@ -656,7 +698,7 @@ export default function App() {
         </section>
 
         {/* Recent Displays Portfolio Section */}
-        <section className="shows-section" aria-labelledby="shows-heading">
+        <section className="shows-section" id="shows" aria-labelledby="shows-heading">
           <div className="shows-section-header">
             <h2 id="shows-heading">
               Our Recent <span className="grad-text">Displays</span>
@@ -692,6 +734,76 @@ export default function App() {
             {CONFIG.safetyNote} Always maintain a safe spectator distance and follow adult supervision.
           </div>
         </div>
+
+        {/* Factory & Contact Section */}
+        <section className="contact-section" id="contact">
+          <div className="contact-card">
+            <div className="contact-badge">🏭 Factory & Showroom</div>
+            <h2>Order Direct from <span className="grad-text">South Lanka Fireworks</span></h2>
+            <p className="contact-desc">
+              Get genuine factory prices, custom wedding cascade setups, school big match displays, and islandwide event pyrotechnics direct from our manufacturing facility in Galle.
+            </p>
+
+            <div className="contact-grid">
+              <div className="contact-item">
+                <div className="contact-icon">📞</div>
+                <div className="contact-info">
+                  <strong>Phone / Mobile</strong>
+                  <a href="tel:0777135516" className="contact-val">077 713 5516</a>
+                  <a href="tel:0912246572" className="contact-val">091 224 6572</a>
+                </div>
+              </div>
+
+              <div className="contact-item">
+                <div className="contact-icon">💬</div>
+                <div className="contact-info">
+                  <strong>WhatsApp Orders & Inquiries</strong>
+                  <a
+                    href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hello%20South%20Lanka%20Fireworks,%20I%20would%20like%20to%20place%20an%20order.`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="contact-val highlight"
+                  >
+                    +94 77 713 5516 (Direct)
+                  </a>
+                  <span className="contact-sub">Instant Quotations & Confirmations</span>
+                </div>
+              </div>
+
+              <div className="contact-item">
+                <div className="contact-icon">📍</div>
+                <div className="contact-info">
+                  <strong>Location & Facility</strong>
+                  <span className="contact-val">Galle, Southern Province</span>
+                  <span className="contact-sub">Sri Lanka · Islandwide Delivery</span>
+                </div>
+              </div>
+
+              <div className="contact-item">
+                <div className="contact-icon">⏰</div>
+                <div className="contact-info">
+                  <strong>Operating Hours</strong>
+                  <span className="contact-val">Open Daily: 8:00 AM – 9:00 PM</span>
+                  <span className="contact-sub">Event Support & Pyro Teams 24/7</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-cta">
+              <a
+                href={`https://wa.me/${CONFIG.whatsappNumber}?text=Hello%20South%20Lanka%20Fireworks,%20I%20would%20like%20to%20inquire%20about%20fireworks.`}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-wa btn-lg"
+              >
+                💬 Chat with Us on WhatsApp (077 713 5516)
+              </a>
+              <a href="#catalog" className="btn btn-ghost btn-lg">
+                Explore All Products ↑
+              </a>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
@@ -776,149 +888,160 @@ export default function App() {
               </button>
             </div>
           ) : (
-            <>
-              {items.map((i) => (
-                <div className="order-line" key={keyOf(i.id, i.size)}>
-                  <img className="order-line-img" src={i.image} alt={i.label} />
-                  <div className="order-line-details">
-                    <span className="order-line-title">{i.label}</span>
-                    <span className="order-line-price-unit">{money(i.price)} each</span>
-                    <Qty
-                      small
-                      value={i.qty}
-                      onChange={(v) => setQty(i.id, i.size, v)}
-                    />
+            <div className="drawer-grid">
+              {/* Left Pane: Selected Items List */}
+              <div className="drawer-items-pane">
+                <div className="drawer-pane-head">
+                  <div className="drawer-pane-title">
+                    <span>🛍️ Selected Items</span>
+                    <span className="drawer-pane-count">({count})</span>
                   </div>
-                  <div className="order-line-right">
-                    <span className="order-line-total">{money(i.price * i.qty)}</span>
-                    <button
-                      type="button"
-                      className="link-btn"
-                      onClick={() => setQty(i.id, i.size, 0)}
-                    >
-                      Remove
-                    </button>
+                  <button
+                    type="button"
+                    className="link-btn"
+                    onClick={() => {
+                      if (confirm('Are you sure you want to clear all items from your order?')) {
+                        setCart({});
+                      }
+                    }}
+                  >
+                    Clear all
+                  </button>
+                </div>
+
+                <div className="drawer-items-list">
+                  {items.map((i) => (
+                    <div className="order-line" key={keyOf(i.id, i.size)}>
+                      <img className="order-line-img" src={i.image} alt={i.label} />
+                      <div className="order-line-details">
+                        <span className="order-line-title">{i.label}</span>
+                        <span className="order-line-price-unit">{money(i.price)} each</span>
+                        <Qty
+                          small
+                          value={i.qty}
+                          onChange={(v) => setQty(i.id, i.size, v)}
+                        />
+                      </div>
+                      <div className="order-line-right">
+                        <span className="order-line-total">{money(i.price * i.qty)}</span>
+                        <button
+                          type="button"
+                          className="link-btn"
+                          onClick={() => setQty(i.id, i.size, 0)}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Pane: Customer Form & Actions */}
+              <div className="drawer-checkout-pane">
+                <div className="customer-form-section">
+                  <h3 className="customer-form-title">
+                    <span>👤</span> Customer & Delivery Details
+                  </h3>
+                  <div className="customer-form">
+                    <div className="form-group">
+                      <label htmlFor="c-name">Your Full Name *</label>
+                      <input
+                        id="c-name"
+                        className="form-input"
+                        placeholder="e.g. Kasun Perera"
+                        required
+                        {...field('name')}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="c-phone">WhatsApp / Phone Number *</label>
+                      <input
+                        id="c-phone"
+                        type="tel"
+                        className="form-input"
+                        placeholder="e.g. 077 123 4567"
+                        required
+                        {...field('phone')}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="c-address">Delivery Address / City</label>
+                      <input
+                        id="c-address"
+                        className="form-input"
+                        placeholder="e.g. Galle / Matara / Colombo"
+                        {...field('address')}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="c-note">Special Instructions (Optional)</label>
+                      <textarea
+                        id="c-note"
+                        className="form-input form-textarea"
+                        rows={2}
+                        placeholder="e.g. Preferred delivery date or wedding timing"
+                        {...field('note')}
+                      />
+                    </div>
                   </div>
                 </div>
-              ))}
 
-              <div className="customer-form-section">
-                <h3 className="customer-form-title">
-                  <span>👤</span> Customer & Delivery Details
-                </h3>
-                <div className="customer-form">
-                  <div className="form-group">
-                    <label htmlFor="c-name">Your Full Name *</label>
-                    <input
-                      id="c-name"
-                      className="form-input"
-                      placeholder="e.g. Kasun Perera"
-                      required
-                      {...field('name')}
-                    />
+                <div className="drawer-checkout-summary">
+                  <div className="drawer-total-row">
+                    <span className="drawer-total-label">Total Amount:</span>
+                    <span className="drawer-total-amount">
+                      <b>{money(total)}</b>
+                    </span>
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="c-phone">WhatsApp / Phone Number *</label>
-                    <input
-                      id="c-phone"
-                      type="tel"
-                      className="form-input"
-                      placeholder="e.g. 077 123 4567"
-                      required
-                      {...field('phone')}
-                    />
-                  </div>
+                  <div className="drawer-actions">
+                    <div className="drawer-recipient-hint">
+                      <span className="wa-dot">●</span>
+                      <span>Direct WhatsApp Order to: <b>077 713 5516</b></span>
+                    </div>
 
-                  <div className="form-group">
-                    <label htmlFor="c-address">Delivery Address / City</label>
-                    <input
-                      id="c-address"
-                      className="form-input"
-                      placeholder="e.g. Galle / Matara / Colombo"
-                      {...field('address')}
-                    />
-                  </div>
+                    <button
+                      id="send-whatsapp"
+                      type="button"
+                      className="btn btn-wa"
+                      disabled={busy}
+                      onClick={sendWhatsApp}
+                    >
+                      {busy ? 'Preparing Order…' : '💬 Send Order to WhatsApp (077 713 5516)'}
+                    </button>
 
-                  <div className="form-group">
-                    <label htmlFor="c-note">Special Instructions (Optional)</label>
-                    <textarea
-                      id="c-note"
-                      className="form-input form-textarea"
-                      rows={2}
-                      placeholder="e.g. Preferred delivery date or wedding timing"
-                      {...field('note')}
-                    />
+                    <button
+                      id="download-pdf"
+                      type="button"
+                      className="btn btn-ghost"
+                      disabled={busy}
+                      onClick={downloadPdf}
+                    >
+                      📄 Download PDF Quotation
+                    </button>
+
+                    {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
+                      <button
+                        id="share-quotation"
+                        type="button"
+                        className="btn btn-ghost btn-sm"
+                        disabled={busy}
+                        onClick={shareQuotation}
+                        title="Share quotation with family or coordinator"
+                      >
+                        📤 Share Quotation / PDF with Others
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
-
-        {items.length > 0 && (
-          <div className="drawer-foot">
-            <div className="drawer-total-row">
-              <span className="drawer-total-label">Total Amount:</span>
-              <span className="drawer-total-amount">
-                <b>{money(total)}</b>
-              </span>
-            </div>
-
-            <div className="drawer-actions">
-              <div className="drawer-recipient-hint">
-                <span className="wa-dot">●</span>
-                <span>Direct WhatsApp Order to: <b>077 713 5516</b></span>
-              </div>
-
-              <button
-                id="send-whatsapp"
-                type="button"
-                className="btn btn-wa"
-                disabled={busy}
-                onClick={sendWhatsApp}
-              >
-                {busy ? 'Preparing Order…' : '💬 Send Order to WhatsApp (077 713 5516)'}
-              </button>
-
-              <button
-                id="download-pdf"
-                type="button"
-                className="btn btn-ghost"
-                disabled={busy}
-                onClick={downloadPdf}
-              >
-                📄 Download PDF Quotation
-              </button>
-
-              {typeof navigator !== 'undefined' && typeof navigator.share === 'function' && (
-                <button
-                  id="share-quotation"
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  disabled={busy}
-                  onClick={shareQuotation}
-                  title="Share quotation with family or coordinator"
-                >
-                  📤 Share Quotation / PDF with Others
-                </button>
-              )}
-
-              <button
-                type="button"
-                className="link"
-                style={{ textAlign: 'center', marginTop: '4px' }}
-                onClick={() => {
-                  if (confirm('Are you sure you want to clear all items from your order?')) {
-                    setCart({});
-                  }
-                }}
-              >
-                Clear entire order
-              </button>
-            </div>
-          </div>
-        )}
       </aside>
 
       {/* Video Modal Player */}
